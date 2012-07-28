@@ -1,0 +1,19 @@
+{
+  "name": "deptree",
+  "author": "Greg Allen <@jgaui> (http://jga.me)",
+  "description": "A library to help figure out dependency trees",
+  "version": "0.0.1",
+  "homepage": "https://github.com/jgallen23/deptree",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jgallen23/deptree.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "keywords": [ "dependency" ],
+  "engines": {
+    "node": "*"
+  }
+}
