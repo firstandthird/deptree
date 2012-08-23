@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/jgallen23/deptree.png)](http://travis-ci.org/jgallen23/deptree)
 # DepTree
 
 ##Installation
