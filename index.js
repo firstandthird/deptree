@@ -26,6 +26,9 @@ DepTree.prototype.resolveNode = function(node, resolved, processing) {
   processing[node] = true;
 
   deps.forEach(function(dep) {
+    if (resolved.indexOf(dep) != -1) {
+      return;
+    }
     if (processing[dep]) {
       throw new Error('Circular dependency: '+dep);
     }

@@ -76,4 +76,15 @@ suite('DepTree', function() {
     });
   });
 
+  test('circular dependency check', function() {
+
+    depTree.add('a');
+    depTree.add('b', 'a');
+    depTree.add('c', ['a', 'b']);
+    var results = depTree.resolve();
+    assert.deepEqual(results, ['a', 'b', 'c']);
+
+    
+  });
+
 });
