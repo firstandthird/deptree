@@ -2,7 +2,7 @@
   "name": "deptree",
   "author": "Greg Allen <@jgaui> (http://jga.me)",
   "description": "A library to resolve dependency trees",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "homepage": "https://github.com/jgallen23/deptree",
   "repository": {
     "type": "git",
