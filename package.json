@@ -13,6 +13,9 @@
     "mocha": "*"
   },
   "keywords": [ "dependency" ],
+  "scripts": {
+    "test": "mocha"
+  },
   "engines": {
     "node": "*"
   }
