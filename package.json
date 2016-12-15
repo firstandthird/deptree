@@ -10,9 +10,14 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "eslint": "^3.9.1",
+    "eslint-config-firstandthird": "^3.0.2",
+    "eslint-plugin-import": "^2.1.0",
     "mocha": "*"
   },
-  "keywords": [ "dependency" ],
+  "keywords": [
+    "dependency"
+  ],
   "scripts": {
     "test": "mocha"
   },
