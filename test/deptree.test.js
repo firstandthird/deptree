@@ -1,75 +1,86 @@
 'use strict';
-const assert = require('assert');
 const DepTree = require('../');
+const test = require('tape');
 /* eslint-disable no-undef */
 
-suite('DepTree', () => {
-  let depTree;
-  setup(() => {
-    depTree = new DepTree();
-  });
+test('no dependents', (t) => {
+  t.plan(1);
+  const depTree = new DepTree();
+  depTree.add('a');
+  const results = depTree.resolve();
+  t.deepEqual(results, ['a']);
+});
 
-  test('no dependents', () => {
-    depTree.add('a');
-    const results = depTree.resolve();
-    assert.deepEqual(results, ['a']);
-  });
+test('1 dependent', (t) => {
+  t.plan(1);
+  const depTree = new DepTree();
+  depTree.add('a', 'b');
+  const results = depTree.resolve();
+  t.deepEqual(results, ['b', 'a']);
+});
 
-  test('1 dependent', () => {
-    depTree.add('a', 'b');
-    const results = depTree.resolve();
-    assert.deepEqual(results, ['b', 'a']);
-  });
+test('2 dependents', (t) => {
+  t.plan(1);
+  const depTree = new DepTree();
+  depTree.add('a', ['c', 'b']);
+  const results = depTree.resolve();
+  t.deepEqual(results, ['c', 'b', 'a']);
+});
 
-  test('2 dependents', () => {
-    depTree.add('a', ['c', 'b']);
-    const results = depTree.resolve();
-    assert.deepEqual(results, ['c', 'b', 'a']);
-  });
+test('add multiple', (t) => {
+  t.plan(1);
+  const depTree = new DepTree();
+  depTree.add('a');
+  depTree.add('b');
+  const results = depTree.resolve();
+  t.deepEqual(results, ['a', 'b']);
+});
 
-  test('add multiple', () => {
-    depTree.add('a');
-    depTree.add('b');
-    const results = depTree.resolve();
-    assert.deepEqual(results, ['a', 'b']);
-  });
+test('no duplicates', (t) => {
+  t.plan(1);
+  const depTree = new DepTree();
+  depTree.add('a', 'b');
+  depTree.add('c', 'b');
+  const results = depTree.resolve();
+  t.deepEqual(results, ['b', 'a', 'c']);
+});
 
-  test('no duplicates', () => {
-    depTree.add('a', 'b');
-    depTree.add('c', 'b');
-    const results = depTree.resolve();
-    assert.deepEqual(results, ['b', 'a', 'c']);
-  });
+test('nested dependencies', (t) => {
+  t.plan(1);
+  const depTree = new DepTree();
+  depTree.add('a', ['b', 'd']);
+  depTree.add('b', ['c', 'd']);
+  const results = depTree.resolve();
+  t.deepEqual(results, ['c', 'd', 'b', 'a']);
+});
 
-  test('nested dependencies', () => {
-    depTree.add('a', ['b', 'd']);
-    depTree.add('b', ['c', 'd']);
-    const results = depTree.resolve();
-    assert.deepEqual(results, ['c', 'd', 'b', 'a']);
+test('circular dependency check', (t) => {
+  t.plan(1);
+  const depTree = new DepTree();
+  depTree.add('a', 'b');
+  depTree.add('b', 'a');
+  t.throws(() => {
+    depTree.resolve();
   });
+});
 
-  test('circular dependency check', () => {
-    depTree.add('a', 'b');
-    depTree.add('b', 'a');
-    assert.throws(() => {
-      depTree.resolve();
-    });
+test('advanced circular dependency check', (t) => {
+  t.plan(1);
+  const depTree = new DepTree();
+  depTree.add('a', 'b');
+  depTree.add('b', 'c');
+  depTree.add('c', 'a');
+  t.throws(() => {
+    depTree.resolve();
   });
+});
 
-  test('advanced circular dependency check', () => {
-    depTree.add('a', 'b');
-    depTree.add('b', 'c');
-    depTree.add('c', 'a');
-    assert.throws(() => {
-      depTree.resolve();
-    });
-  });
-
-  test('circular dependency check', () => {
-    depTree.add('a');
-    depTree.add('b', 'a');
-    depTree.add('c', ['a', 'b']);
-    const results = depTree.resolve();
-    assert.deepEqual(results, ['a', 'b', 'c']);
-  });
+test('circular dependency check', (t) => {
+  t.plan(1);
+  const depTree = new DepTree();
+  depTree.add('a');
+  depTree.add('b', 'a');
+  depTree.add('c', ['a', 'b']);
+  const results = depTree.resolve();
+  t.deepEqual(results, ['a', 'b', 'c']);
 });

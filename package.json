@@ -2,7 +2,7 @@
   "name": "deptree",
   "author": "Greg Allen <@jgaui> (http://jga.me)",
   "description": "A library to resolve dependency trees",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/jgallen23/deptree",
   "repository": {
     "type": "git",
@@ -13,15 +13,16 @@
     "eslint": "^3.9.1",
     "eslint-config-firstandthird": "^3.0.2",
     "eslint-plugin-import": "^2.1.0",
-    "mocha": "*"
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.3"
   },
   "keywords": [
     "dependency"
   ],
   "scripts": {
-    "test": "mocha"
+    "test": "tape test/deptree.test.js | tap-spec"
   },
   "engines": {
-    "node": "*"
+   "node": "*"
   }
 }
