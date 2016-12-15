@@ -1,12 +1,12 @@
 {
   "name": "deptree",
-  "author": "Greg Allen <@jgaui> (http://jga.me)",
+  "author": "First and Third <http://firstandthird.com>",
   "description": "A library to resolve dependency trees",
-  "version": "0.2.0",
-  "homepage": "https://github.com/jgallen23/deptree",
+  "version": "1.0.0",
+  "homepage": "https://github.com/firstandthird/deptree",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jgallen23/deptree.git"
+    "url": "https://github.com/firstandthird/deptree.git"
   },
   "dependencies": {},
   "devDependencies": {
