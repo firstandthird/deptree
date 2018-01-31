@@ -41,8 +41,23 @@ test('no duplicates', (t) => {
   const depTree = new DepTree();
   depTree.add('a', 'b');
   depTree.add('c', 'b');
+  depTree.add('b', []);
   const results = depTree.resolve();
   t.deepEqual(results, ['b', 'a', 'c']);
+});
+
+test('no broken dependencies', (t) => {
+  t.plan(1);
+  const depTree = new DepTree();
+  depTree.add('a', 'b');
+  depTree.add('c', 'b');
+  try {
+    depTree.resolve();
+  } catch (e) {
+    t.equal(e.toString(), 'Error: Missing plugin dependency b', 'throws error if missing plugin dependency');
+    return;
+  }
+  t.fail();
 });
 
 test('nested dependencies', (t) => {
@@ -50,6 +65,8 @@ test('nested dependencies', (t) => {
   const depTree = new DepTree();
   depTree.add('a', ['b', 'd']);
   depTree.add('b', ['c', 'd']);
+  depTree.add('c', []);
+  depTree.add('d', []);
   const results = depTree.resolve();
   t.deepEqual(results, ['c', 'd', 'b', 'a']);
 });

@@ -2,6 +2,8 @@
 class DepTree {
   constructor() {
     this.nodes = {};
+    this.names = [];
+    this.dependencies = [];
   }
 
   add(node, dependants) {
@@ -10,6 +12,8 @@ class DepTree {
     } else if (!(dependants instanceof Array)) {
       dependants = [dependants];
     }
+    this.names.push(node);
+    this.dependencies = this.dependencies.concat(dependants);
     this.nodes[node] = dependants;
   }
 
@@ -37,10 +41,19 @@ class DepTree {
   }
 
   resolve() {
+    // ensure all dependencies exist:
+    if (this.names.length > 1) {
+      for (let i = 0; i < this.dependencies.length; i++) {
+        if (!this.names.includes(this.dependencies[i])) {
+          throw new Error(`Missing plugin dependency ${this.dependencies[i]}`);
+        }
+      }
+    }
     const resolved = [];
     for (const node in this.nodes) {
       this.resolveNode(node, resolved);
     }
+
     return resolved;
   }
 }
