@@ -7,7 +7,7 @@ class DepTree {
   add(node, dependants) {
     if (!dependants) {
       dependants = [];
-    } else if (!(dependants instanceof Array)) {
+    } else if (!Array.isArray(dependants)) {
       dependants = [dependants];
     }
     this.nodes[node] = dependants;
@@ -21,7 +21,7 @@ class DepTree {
     processing[node] = true;
 
     deps.forEach((dep) => {
-      if (resolved.indexOf(dep) !== -1) {
+      if (resolved.includes(dep)) {
         return;
       }
       if (processing[dep]) {
@@ -29,7 +29,7 @@ class DepTree {
       }
       this.resolveNode(dep, resolved, processing);
     });
-    if (resolved.indexOf(node) === -1) {
+    if (!resolved.includes(node)) {
       processing[node] = false;
       resolved.push(node);
     }
@@ -38,11 +38,9 @@ class DepTree {
 
   resolve() {
     const resolved = [];
-    for (const node in this.nodes) {
-      this.resolveNode(node, resolved);
-    }
+    Object.keys(this.nodes).forEach(node => this.resolveNode(node, resolved));
     for (let i = 0; i < resolved.length; i++) {
-      if (Object.keys(this.nodes).indexOf(resolved[i]) === -1) {
+      if (!Object.keys(this.nodes).includes(resolved[i])) {
         throw new Error(`Cannot find required dependency ${resolved[i]}`);
       }
     }

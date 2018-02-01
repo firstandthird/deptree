@@ -61,14 +61,15 @@ test('broken dependency', (t) => {
     return;
   }
   t.fail();
-  // t.deepEqual(results, ['b', 'a', 'c']);
 });
-/*
+
 test('nested dependencies', (t) => {
   t.plan(1);
   const depTree = new DepTree();
   depTree.add('a', ['b', 'd']);
   depTree.add('b', ['c', 'd']);
+  depTree.add('d');
+  depTree.add('c');
   const results = depTree.resolve();
   t.deepEqual(results, ['c', 'd', 'b', 'a']);
 });
@@ -103,4 +104,3 @@ test('circular dependency check', (t) => {
   const results = depTree.resolve();
   t.deepEqual(results, ['a', 'b', 'c']);
 });
-*/
