@@ -41,6 +41,11 @@ class DepTree {
     for (const node in this.nodes) {
       this.resolveNode(node, resolved);
     }
+    for (let i = 0; i < resolved.length; i++) {
+      if (Object.keys(this.nodes).indexOf(resolved[i]) === -1) {
+        throw new Error(`Cannot find required dependency ${resolved[i]}`);
+      }
+    }
     return resolved;
   }
 }
