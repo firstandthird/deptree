@@ -1,6 +1,7 @@
 {
   "name": "deptree",
   "author": "First and Third <http://firstandthird.com>",
+  "license":"MIT",
   "description": "A library to resolve dependency trees",
   "version": "1.0.0",
   "homepage": "https://github.com/firstandthird/deptree",
