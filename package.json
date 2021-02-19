@@ -1,9 +1,9 @@
 {
   "name": "deptree",
   "author": "First and Third <http://firstandthird.com>",
-  "license":"MIT",
+  "license": "MIT",
   "description": "A library to resolve dependency trees",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/firstandthird/deptree",
   "repository": {
     "type": "git",
@@ -24,6 +24,6 @@
     "test": "tape test/deptree.test.js | tap-spec"
   },
   "engines": {
-   "node": "*"
+    "node": "*"
   }
 }
