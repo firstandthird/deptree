@@ -15,6 +15,7 @@ test('1 dependent', (t) => {
   t.plan(1);
   const depTree = new DepTree();
   depTree.add('a', 'b');
+  depTree.add('b', []);
   const results = depTree.resolve();
   t.deepEqual(results, ['b', 'a']);
 });
@@ -23,6 +24,8 @@ test('2 dependents', (t) => {
   t.plan(1);
   const depTree = new DepTree();
   depTree.add('a', ['c', 'b']);
+  depTree.add('b', []);
+  depTree.add('c', []);
   const results = depTree.resolve();
   t.deepEqual(results, ['c', 'b', 'a']);
 });
@@ -41,8 +44,23 @@ test('no duplicates', (t) => {
   const depTree = new DepTree();
   depTree.add('a', 'b');
   depTree.add('c', 'b');
+  depTree.add('b', []);
   const results = depTree.resolve();
   t.deepEqual(results, ['b', 'a', 'c']);
+});
+
+test('broken dependency', (t) => {
+  t.plan(1);
+  const depTree = new DepTree();
+  depTree.add('a', 'b');
+  depTree.add('c', 'a');
+  try {
+    depTree.resolve();
+  } catch (e) {
+    t.equal(e.toString(), 'Error: Cannot find required dependency b');
+    return;
+  }
+  t.fail();
 });
 
 test('nested dependencies', (t) => {
@@ -50,6 +68,8 @@ test('nested dependencies', (t) => {
   const depTree = new DepTree();
   depTree.add('a', ['b', 'd']);
   depTree.add('b', ['c', 'd']);
+  depTree.add('d');
+  depTree.add('c');
   const results = depTree.resolve();
   t.deepEqual(results, ['c', 'd', 'b', 'a']);
 });
